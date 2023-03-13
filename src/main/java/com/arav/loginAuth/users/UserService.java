@@ -1,6 +1,7 @@
 package com.arav.loginAuth.users;
 
 import com.arav.loginAuth.security.authTokens.AuthTokenService;
+import com.arav.loginAuth.security.jwt.JwtService;
 import com.arav.loginAuth.users.dtos.CreateUserRequestDto;
 import com.arav.loginAuth.users.dtos.LoginUserRequestDto;
 import com.arav.loginAuth.users.dtos.UserResponseDto;
@@ -15,11 +16,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthTokenService authTokenService;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthTokenService authTokenService) {
+    private final JwtService jwtService;
+    public UserService(UserRepository userRepository, ModelMapper modelMapper,
+                       PasswordEncoder passwordEncoder, AuthTokenService authTokenService,
+                       JwtService jwtService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.authTokenService = authTokenService;
+        this.jwtService = jwtService;
     }
 
     public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
@@ -27,7 +32,12 @@ public class UserService {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         UserEntity savedUser = userRepository.save(userEntity);
         var response = modelMapper.map(savedUser, UserResponseDto.class);
-        var token = authTokenService.createToken(savedUser);
+        //Option 1: Server Side Token
+        //var token = authTokenService.createToken(savedUser);
+        //response.setToken(token);
+
+        //Option 2: JWT Token
+        var token = jwtService.createJwt(savedUser.getUsername());
         response.setToken(token);
         return response;
     }
@@ -42,7 +52,7 @@ public class UserService {
         }
 
         var response = modelMapper.map(userEntity, UserResponseDto.class);
-        response.setToken(authTokenService.createToken(userEntity));
+        response.setToken(jwtService.createJwt(userEntity.getUsername()));
         return response;
     }
 }
