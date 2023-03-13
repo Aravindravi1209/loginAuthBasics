@@ -1,0 +1,13 @@
+server:
+    port: 4343
+
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/login_db
+        username: aravind
+        password: Arav@1998
+    jpa:
+        hibernate:
+            ddl-auto: create
+        show-sql: true
