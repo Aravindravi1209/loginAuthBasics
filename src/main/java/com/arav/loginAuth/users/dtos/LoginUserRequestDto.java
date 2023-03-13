@@ -1,4 +1,4 @@
-package com.arav.loginAuth.users;
+package com.arav.loginAuth.users.dtos;
 
 import lombok.Data;
 
