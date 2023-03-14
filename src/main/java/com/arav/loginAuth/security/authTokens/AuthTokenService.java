@@ -22,7 +22,13 @@ public class AuthTokenService {
     }
 
     public UserEntity getUserFromToken(String token) {
-        var authToken = authTokenRepository.findById(token).orElseThrow();
-        return authToken.getUser();
+        for(AuthTokenEntity authTokenEntity : authTokenRepository.findAll())
+        {
+            if(authTokenEntity.getToken().toString().equals(token))
+            {
+                return authTokenEntity.getUser();
+            }
+        }
+        throw new IllegalArgumentException("Token not found");
     }
 }

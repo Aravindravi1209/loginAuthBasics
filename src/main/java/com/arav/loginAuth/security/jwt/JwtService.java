@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    public static final String SECRET = "iasuhdnk7823jjnqwdm099a9jijnk21201ejakldasnxashuijkf2983ahsd";
+    public static final String SECRET = "khb7k2jmn4b67k2jn35bl2j4bk5n2b6kn42";
     Algorithm algorithm = Algorithm.HMAC256(SECRET);
     public String createJwt(String username) {
         return JWT.create()

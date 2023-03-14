@@ -1,5 +1,8 @@
 package com.arav.loginAuth.security;
 
+import com.arav.loginAuth.security.authTokens.AuthTokenService;
+import com.arav.loginAuth.security.authTokens.SSTAuthenticationFilter;
+import com.arav.loginAuth.security.authTokens.SSTAuthenticationManager;
 import com.arav.loginAuth.security.jwt.JwtAuthenticationConverter;
 import com.arav.loginAuth.security.jwt.JwtAuthenticationFilter;
 import com.arav.loginAuth.security.jwt.JwtAuthenticationManager;
@@ -19,9 +22,11 @@ import org.springframework.security.web.authentication.AnonymousAuthenticationFi
 public class AppSecurityConfig{
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final SSTAuthenticationFilter sstAuthenticationFilter;
 
-    public AppSecurityConfig(JwtService jwtService, UserService userService) {
+    public AppSecurityConfig(JwtService jwtService, AuthTokenService authTokenService, UserService userService) {
         this.jwtAuthenticationFilter = new JwtAuthenticationFilter(new JwtAuthenticationManager(jwtService, userService));
+        this.sstAuthenticationFilter = new SSTAuthenticationFilter(new SSTAuthenticationManager(authTokenService, userService));
     }
 
     @Bean

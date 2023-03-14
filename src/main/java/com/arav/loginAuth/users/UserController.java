@@ -16,12 +16,11 @@ import java.net.URI;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final ModelMapper modelMapper;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
     }
+
 
     @PostMapping("")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody CreateUserRequestDto createUserRequestDto) {

@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -60,4 +62,5 @@ public class UserService {
         UserEntity userEntity = userRepository.findByUsername(username);
         return modelMapper.map(userEntity, UserResponseDto.class);
     }
+
 }
