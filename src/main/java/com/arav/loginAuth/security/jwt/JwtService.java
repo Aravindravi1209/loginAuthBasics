@@ -11,6 +11,8 @@ public class JwtService {
     public static final String SECRET = "khb7k2jmn4b67k2jn35bl2j4bk5n2b6kn42";
     Algorithm algorithm = Algorithm.HMAC256(SECRET);
     public String createJwt(String username) {
+        if(username == null || username.isEmpty())
+            throw new IllegalArgumentException("Username cannot be null or empty");
         return JWT.create()
                 .withSubject(username)
                 .withIssuedAt(new Date())

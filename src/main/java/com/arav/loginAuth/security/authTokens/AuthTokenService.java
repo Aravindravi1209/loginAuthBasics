@@ -15,6 +15,8 @@ public class AuthTokenService {
     }
 
     public String createToken(UserEntity userEntity) {
+        if(userEntity == null)
+            throw new IllegalArgumentException("User cannot be null");
         var token = new AuthTokenEntity();
         token.setUser(userEntity);
         authTokenRepository.save(token);
