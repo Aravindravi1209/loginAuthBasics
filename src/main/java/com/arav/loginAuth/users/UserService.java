@@ -55,4 +55,9 @@ public class UserService {
         response.setToken(jwtService.createJwt(userEntity.getUsername()));
         return response;
     }
+
+    public UserResponseDto findUserbyUsername(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        return modelMapper.map(userEntity, UserResponseDto.class);
+    }
 }
